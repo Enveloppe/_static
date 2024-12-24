@@ -14,6 +14,7 @@ jobs:
             - name: build
               run: bun run publish
             - name: commit and push new version
+              continue-on-error: true
               run: |
                   git config --local user.email "github-actions[bot]@users.noreply.github.com"
                   git config --local user.name "github-actions[bot]"
