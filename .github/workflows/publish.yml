@@ -1,0 +1,22 @@
+name: Build and push
+on:
+    push:
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Setup bun
+              uses: oven-sh/setup-bun@v2
+            - name: install dep
+              run: bun install
+            - name: build
+              run: bun run publish
+            - name: commit and push new version
+              run: |
+                  git config --local user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git add ./dist
+                  git commit -m "Publish builded files"
+                  git push origin HEAD:master

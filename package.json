@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "gulp",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "publish": "gulp publish"
   },
   "dependencies": {
     "gulp": "^5.0.0",
