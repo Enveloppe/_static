@@ -52,7 +52,7 @@ function calculateHeight(firstPara) {
 try {
   const links = Array.from(
     document.querySelectorAll(`.md-content a[href^="${blogURL}"], a.footnote-ref, a[href^="./"]`)
-  ).filter((link) => !link.classList.contains("link_citation"));
+  ).filter((link) => !link.classList.contains("link_citation") && !link.classList.contains("post-link"));
 
   tippy(links, {
     content: "",
