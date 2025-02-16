@@ -3,11 +3,13 @@ import concat from "gulp-concat";
 import uglify from "gulp-uglify";
 import cleanCSS from "gulp-clean-css";
 
+const wikiPath = "./mara-li/docs/_static";
+
 gulp.task('scripts', function() {
     return gulp.src("js/*.js")
         .pipe(concat('index.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('../docs/_static/js'));
+        .pipe(gulp.dest(`${wikiPath}/js`));
 });
 
 
@@ -15,7 +17,7 @@ gulp.task("styles", function() {
     return gulp.src("css/*.css")
         .pipe(concat("styles.css"))
         .pipe(cleanCSS())
-        .pipe(gulp.dest("../docs/_static/css"));
+        .pipe(gulp.dest(`${wikiPath}/css`));
 });
 
 gulp.task('watch', function() {
