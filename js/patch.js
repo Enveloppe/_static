@@ -1,12 +1,10 @@
-
 /**
  * @file Misc
  * @description Various file links and patch I was to lazy to do in mkdocs
  */
 
-
 //patch a href attributes
-const header_links = document.querySelectorAll("a[href*=\"#\"]");
+const header_links = document.querySelectorAll('a[href*="#"]');
 if (header_links) {
 	for (var i = 0; i < header_links.length; i++) {
 		const header = header_links[i].getAttribute("href").replace("^.*#", "");
@@ -16,27 +14,26 @@ if (header_links) {
 		header_fix = header.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 		header_links[i].setAttribute(
 			"href",
-			header_links[i].getAttribute("href").replace(header, header_fix)
+			header_links[i].getAttribute("href").replace(header, header_fix),
 		);
 	}
 }
 
-
 for (const i of document.querySelectorAll("img")) {
-	const resize = /^(?<alt>(?!^\d*x?\d*$).*?)?(\|?\s*?(?<width>\d+)(x(?<height>\d+))?)?$/gi;
+	const resize =
+		/^(?<alt>(?!^\d*x?\d*$).*?)?(\|?\s*?(?<width>\d+)(x(?<height>\d+))?)?$/gi;
 	if (i.alt.match(resize)) {
 		const match = resize.exec(i.alt ?? "");
 		i.width = match.groups.width ?? i.width;
 		i.height = match.groups.height ?? i.height;
 		i.alt = match.groups.alt ?? i.alt;
-
 	}
 }
 
 //remove ^id from contents ;
 // Only work in the form of "content ^id" (and ^id must end the lines)
 const article = document.querySelectorAll(
-	"article.md-content__inner.md-typeset > *:not(.highlight)"
+	"article.md-content__inner.md-typeset > *:not(.highlight)",
 );
 const embed_id_regex = /\^\w+\s*$/gi;
 for (const element of article) {
@@ -61,4 +58,3 @@ if (cite) {
 		}
 	}
 }
-

@@ -25,7 +25,7 @@ if (chirpy) {
 			if (mutation.type === "attributes") {
 				chirpy.setAttribute(
 					"data-chirpy-theme",
-					mkDocsChirpyTranslator[mkDocs.dataset.mdColorScheme]
+					mkDocsChirpyTranslator[mkDocs.dataset.mdColorScheme],
 				);
 			}
 		});

@@ -11,7 +11,8 @@ window.onload = function () {
 			fileInStylesheets.push(file.href);
 		}
 	});
-	const doc = frameElement.contentDocument || frameElement.contentWindow.document;
+	const doc =
+		frameElement.contentDocument || frameElement.contentWindow.document;
 	fileInStylesheets.forEach((file) => {
 		const link = document.createElement("link");
 		link.rel = "stylesheet";
@@ -26,7 +27,9 @@ window.onload = function () {
 		doc.body.setAttribute("class", "light");
 	} else {
 		doc.body.setAttribute("class", "dark");
-		const bgColor = getComputedStyle(theme).getPropertyValue("--md-default-bg-color");
+		const bgColor = getComputedStyle(theme).getPropertyValue(
+			"--md-default-bg-color",
+		);
 		doc.body.style.setProperty("--md-default-bg-color", bgColor);
 	}
 	doc.body.classList.add("graph-view");
