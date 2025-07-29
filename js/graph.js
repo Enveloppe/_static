@@ -1,18 +1,26 @@
 window.onload = function () {
 	const frameElement = document.querySelector("iframe");
-	if (!frameElement) {
+	if (!frameElement) return;
+	let doc;
+	try {
+		const sameOrigin = frameElement.contentWindow?.location?.origin === location.origin;
+		if (!sameOrigin) {
+			console.warn("The iframe is not the one we want: we want the graph, that has the same origin! Ignore.");
+			return;
+		}
+
+		doc = frameElement.contentDocument || frameElement.contentWindow.document;
+	} catch (e) {
+		console.warn("Unable to access the iframe (CORS blocked) :", e);
 		return;
 	}
-	/** get all file in assets/stylesheets */
+
 	const fileInStylesheets = [];
-	const files = document.querySelectorAll("link");
+	const files = document.querySelectorAll("link[href$='.css']");
 	files.forEach((file) => {
-		if (file.href.endsWith(".css")) {
-			fileInStylesheets.push(file.href);
-		}
+		fileInStylesheets.push(file.href);
 	});
-	const doc =
-		frameElement.contentDocument || frameElement.contentWindow.document;
+
 	fileInStylesheets.forEach((file) => {
 		const link = document.createElement("link");
 		link.rel = "stylesheet";
@@ -20,17 +28,16 @@ window.onload = function () {
 		link.type = "text/css";
 		doc.head.appendChild(link);
 	});
-	const theme = document.querySelector("[data-md-color-scheme]");
-	/** get slate bg */
 
-	if (theme.getAttribute("data-md-color-scheme") === "default") {
+	const theme = document.querySelector("[data-md-color-scheme]");
+	if (theme?.getAttribute("data-md-color-scheme") === "default") {
 		doc.body.setAttribute("class", "light");
 	} else {
 		doc.body.setAttribute("class", "dark");
-		const bgColor = getComputedStyle(theme).getPropertyValue(
-			"--md-default-bg-color",
-		);
-		doc.body.style.setProperty("--md-default-bg-color", bgColor);
+		const bgColor = getComputedStyle(theme).getPropertyValue("--md-default-bg-color");
+		if (bgColor) {
+			doc.body.style.setProperty("--md-default-bg-color", bgColor);
+		}
 	}
 	doc.body.classList.add("graph-view");
 };
